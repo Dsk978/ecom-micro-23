@@ -1,0 +1,101 @@
+version: '4.15.0'
+services:
+
+  user-module:
+    image: user
+    mem_limit: 700m
+    ports:
+      - "9091:9091"
+    networks:
+      - ecomm-new
+    depends_on:
+      - naming-server
+      - mongodb-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+
+  category-module:
+    image: category
+    mem_limit: 700m
+    ports:
+      - "9092:9092"
+    networks:
+      - ecomm-new
+    depends_on:
+      - naming-server
+      - mongodb-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+
+  product-module:
+    image: product
+    mem_limit: 700m
+    ports:
+      - "9093:9093"
+    networks:
+      - ecomm-new
+    depends_on:
+      - naming-server
+      - mongodb-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+
+  cart-module:
+    image: cart
+    mem_limit: 700m
+    ports:
+      - "9094:9094"
+    networks:
+      - ecomm-new
+    depends_on:
+      - naming-server
+      - mongodb-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+
+  order-module:
+    image: order
+    mem_limit: 700m
+    ports:
+      - "9095:9095"
+    networks:
+      - ecomm-new
+    depends_on:
+      - naming-server
+      - mongodb-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+
+  api-gateway:
+    image: gateway
+    mem_limit: 700m
+    ports:
+      - "8081:8081"
+    networks:
+      - ecomm-new
+    depends_on:
+      - naming-server    
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+
+
+ 
+
+  naming-server:
+    image: naming
+    mem_limit: 700m
+    ports:
+      - "8761:8761"
+    networks:
+      - ecomm-new
+
+
+  mongodb:
+    image: mongo
+    mem_limit: 700m
+    networks:
+      -ecomm-new
+    ports:
+      - "27017:27017"
+networks:
+  ecomm-new:
